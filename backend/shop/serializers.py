@@ -17,7 +17,7 @@ class TagSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     # Nested category and tag info
     category = CategorySerializer()
-    tag = TagSerializer(many=True)
+    tags = TagSerializer(many=True)
 
     class Meta:
         model = Product
