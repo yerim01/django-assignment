@@ -1,10 +1,10 @@
 from rest_framework import viewsets, filters
 from django_filters.rest_framework import DjangoFilterBackend
-from shop.models import Category, Tag, Product
-from shop.serializers import CategorySerializer, TagSerializer, ProductSerializer
+from shop.models import Product
+from shop.serializers import ProductSerializer
 from rest_framework.permissions import AllowAny
 
-class ProductViewSet(viewsets.ReadOnlyModelViewset):
+class ProductViewSet(viewsets.ReadOnlyModelViewSet):
     """
     A read-only viewset for listing products.
     Supports:
