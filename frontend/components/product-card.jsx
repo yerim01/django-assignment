@@ -9,15 +9,15 @@ export function ProductCard({ product }) {
         <div className="flex flex-col gap-3">
           <div>
             <p className="text-sm text-muted-foreground mb-1">Category</p>
-            <span className="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 inset-ring inset-ring-yellow-600/20">{product.category}</span>
+            <span className="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 inset-ring inset-ring-yellow-600/20">{product.category.name}</span>
           </div>
           {product.tags.length > 0 && (
             <div>
               <p className="text-sm text-muted-foreground mb-2">Tags</p>
               <div className="flex flex-wrap gap-1">
                 {product.tags.map((tag) => (
-                  <span key={tag} className="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 inset-ring inset-ring-gray-500/10">
-                    {tag}
+                  <span key={tag.id} className="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 inset-ring inset-ring-gray-500/10">
+                    {tag.name}
                   </span>
                 ))}
               </div>
