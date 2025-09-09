@@ -12,7 +12,7 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
     - Filter by category
     - Filter by tags
     """
-    queryset = Product.objects.all()
+    queryset = Product.objects.all().order_by("name")
     serializer_class = ProductSerializer
     permission_classes = [AllowAny]
 
@@ -22,13 +22,13 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
 
 # Viewset for listing categories.
 class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Category.objects.all()
+    queryset = Category.objects.all().order_by("name")
     serializer_class = CategorySerializer
     permission_classes = [AllowAny]
 
 # Viewset for listing tags
 class TagViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Tag.objects.all()
+    queryset = Tag.objects.all().order_by("name")
     serializer_class = TagSerializer
     permission_classes = [AllowAny]
     
