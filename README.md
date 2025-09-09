@@ -1,19 +1,20 @@
 # Product Search App
-
 This project is a simple product search app built with Django + React.
 
 **Users can**:
 
-- Search products by description
-- Filter products by category
-- Filter products by tags
-- Combine search and filters
+- Search products by description  
+- Filter products by category  
+- Filter products by tags  
+- Combine search and filters  
+
 
 ## ✨ Tech Stack
 
-- **Django** + DRF for the backend API
-- **React** + **Tailwind CSS** for the frontend
+- **Django** + DRF for the backend API  
+- **React** + **Tailwind CSS** for the frontend  
 - **PostgreSQL/sqlite3** for the database
+- **Docker**
 
 ## 📦 Getting Started
 
@@ -25,7 +26,6 @@ cd django-assignment
 ```
 
 ### 2. Backend setup
-
 ```
 cd Backend
 
@@ -37,6 +37,9 @@ pip install -r requirements.txt
 # Apply migrations
 python manage.py migrate
 
+# Load sample data (Optional. If you want to add data manually in the Django admin, skip this step)
+python manage.py loaddata sample_data.json
+
 # Create superuser to access Django admin
 python manage.py createsuperuser
 
@@ -45,12 +48,11 @@ python manage.py runserver
 ```
 
 #### Set up environment variables (Optional)
-
 Default is SQLite. If you want to use PostgreSQL, add env variables.
 
 Create a .env.local file and add the following:
-
 ```
+DB_ENGINE=django.db.backends.postgresql
 POSTGRES_DB=shop
 POSTGRES_USER=shopuser
 POSTGRES_PASSWORD=1234
@@ -58,8 +60,9 @@ DB_HOST=localhost
 DB_PORT=5432
 ```
 
-- Access backend API: http://localhost:8000/
-- Access Django admin: http://localhost:8000/admin/
+- Access backend API: `http://localhost:8000/`
+- Access Django admin: `http://localhost:8000/admin/`
+
 
 ### 3. Frontend setup
 
@@ -67,22 +70,41 @@ DB_PORT=5432
 cd frontend
 npm install
 npm run dev
-```
 
-- React app runs on: http://localhost:5173/
+```
+- React app runs on: `http://localhost:5173/`
+
+### Docker setup (Optional)
+When using Docker, you do not need PostgreSQL. The container runs with SQLite.
+- Clone the source code and install docker before running commands below
+```
+# Run where docker-compose.yml is located
+docker-compose up --build
+
+docker-compose exec backend python manage.py migrate
+
+docker-compose exec backend python manage.py createsuperuser
+
+# Load sample data (Optional. If you want to add data manually in the Django admin, skip this step)
+docker-compose exec backend python manage.py loaddata sample_data.json
+```
+- Access backend API: `http://localhost:8000/`
+- Access Django admin: `http://localhost:8000/admin/`
+- React app runs on: `http://localhost:3000/`
+
 
 ## API Reference
 
 - `/products/` - GET all products, supports query params:
-
   - `search`: search by product description (example: `/products/?search=wire`)
   - `category`: filter by category ID (example: `/products/?category=2`)
   - `tags`: filter by one or more tag IDs (example: `/products/?tags=1&tags=3`)
-  - You can combine these filters (example: `/products/?search=wire&category=2&tags=1&tags=3`)
+  - You can combine these filters (example: `http://localhost:8000/products/?search=wire&category=2&tags=1&tags=3`)
 
-- `/categories/` - GET a lit of categories
-- `/tags/` - GET a list of tags
+- `/categories/` - GET a lit of categories (example: `http://localhost:8000/categories/`)
+- `/tags/` - GET a list of tags (example: `http://localhost:8000/tags/`)
+
 
 ## Acknowledgements
 
-- Used ChatGPT and Figma Make to generate boilerplate for this project.
+ - Used ChatGPT and Figma Make to generate sample data and boilerplate for this project.
