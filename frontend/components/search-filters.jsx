@@ -75,7 +75,7 @@ export function SearchFilters({
               />
               <label
                 htmlFor={`tag-${tag.id}`}
-                className="text-sm"
+                className="text-sm capitalize"
               >
                 {tag.name}
               </label>
