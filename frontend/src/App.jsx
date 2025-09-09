@@ -1,5 +1,4 @@
-import './App.css'
-import { useState, useMemo, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { ProductCard } from "../components/product-card";
 import { SearchFilters } from "../components/search-filters";
 import { fetchProducts, fetchCategories, fetchTags } from './api/api';
@@ -28,24 +27,23 @@ export default function App() {
     loadData();
   }, []);
 
-  // const filteredProducts = useMemo(() => {
-  //   return products.filter((product) => {
-  //     // Search by description
-  //     const matchesSearch = searchTerm === "" || 
-  //       product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-  //       product.name.toLowerCase().includes(searchTerm.toLowerCase());
+  // Apply search and filters by fetching from API
+  const applyFilters = async () => {
+    const filters = {};
 
-  //     // Filter by category
-  //     const matchesCategory = selectedCategory === "all" || 
-  //       product.category === selectedCategory;
+    if (searchTerm.trim() !== "") {
+      filters.search = searchTerm;
+    }
+    if (selectedCategory !== "all") {
+      filters.category = selectedCategory;
+    }
+    if (selectedTags.length > 0) {
+      filters.tags = selectedTags;
+    }
 
-  //     // Filter by tags (product must have at least one selected tag)
-  //     const matchesTags = selectedTags.length === 0 || 
-  //       selectedTags.some(tag => product.tags.includes(tag));
-
-  //     return matchesSearch && matchesCategory && matchesTags;
-  //   });
-  // }, [searchTerm, selectedCategory, selectedTags]);
+    const filteredProducts = await fetchProducts(filters);
+    setProducts(filteredProducts);
+  }
 
   const handleTagToggle = (tag) => {
     setSelectedTags(prev => 
@@ -55,10 +53,15 @@ export default function App() {
     );
   };
 
-  const handleClearFilters = () => {
+  // clear filters and search
+  const handleClearFilters = async () => {
     setSearchTerm("");
     setSelectedCategory("all");
     setSelectedTags([]);
+
+    // reload all products
+    const allProducts = await fetchProducts();
+    setProducts(allProducts);
   };
 
   return (
@@ -85,6 +88,7 @@ export default function App() {
               categories={categories}
               tags={tags}
               onClearFilters={handleClearFilters}
+              onApplyFilters={applyFilters}
             />
           </div>
 

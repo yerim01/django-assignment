@@ -5,8 +5,16 @@ const API = axios.create({
 });
 
 // Fetch Products
-export const fetchProducts = async () => {
-  const response = await API.get("/products/");
+export const fetchProducts = async (filters = {}) => {
+  const params = new URLSearchParams();
+
+  if (filters.search) params.append("search", filters.search);
+  if (filters.category) params.append("category", filters.category);
+  if (filters.tags && filters.tags.length > 0) {
+    filters.tags.forEach((tagId) => params.append("tags", tagId));
+  }
+
+  const response = await API.get(`/products/?${params.toString()}`);
   console.log("response:", response.data);
   return response.data;
 };

@@ -10,6 +10,7 @@ export function SearchFilters({
   categories,
   tags,
   onClearFilters,
+  onApplyFilters,
 }) {
   const hasActiveFilters = searchTerm || selectedCategory !== "all" || selectedTags.length > 0;
 
@@ -82,6 +83,14 @@ export function SearchFilters({
           ))}
         </div>
       </div>
+
+      {/* Apply Filters Button */}
+      <button
+        onClick={onApplyFilters}
+        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+      >
+        Search or Apply Filters
+      </button>
     </div>
   );
 }
