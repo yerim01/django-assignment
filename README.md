@@ -70,7 +70,6 @@ DB_PORT=5432
 cd frontend
 npm install
 npm run dev
-
 ```
 - React app runs on: `http://localhost:5173/`
 
