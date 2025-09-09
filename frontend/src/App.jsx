@@ -27,6 +27,15 @@ export default function App() {
     loadData();
   }, []);
 
+  // Apply changes when searchTerm, slectedCategory or selectedTags change
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      applyFilters();
+    }, 300);
+
+    return () => clearTimeout(timeout);
+  }, [searchTerm, selectedCategory, selectedTags]);
+
   // Apply search and filters by fetching from API
   const applyFilters = async () => {
     const filters = {};
@@ -88,7 +97,6 @@ export default function App() {
               categories={categories}
               tags={tags}
               onClearFilters={handleClearFilters}
-              onApplyFilters={applyFilters}
             />
           </div>
 
