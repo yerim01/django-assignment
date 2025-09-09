@@ -56,7 +56,6 @@ POSTGRES_USER=shopuser
 POSTGRES_PASSWORD=1234
 DB_HOST=localhost
 DB_PORT=5432
-
 ```
 
 - Access backend API: http://localhost:8000/
@@ -68,7 +67,6 @@ DB_PORT=5432
 cd frontend
 npm install
 npm run dev
-
 ```
 
 - React app runs on: http://localhost:5173/
