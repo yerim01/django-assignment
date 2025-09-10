@@ -11,7 +11,7 @@ This project is a simple product search app built with Django + React.
 
 ## Screenshots
 
-![Screenshot]()
+![Screenshot](https://github.com/yerim01/django-assignment/blob/1e15f9ad37f41d691cb3844d2061de47e9968d4e/screenshot.png)
 
 
 ## Tech Stack
