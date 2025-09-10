@@ -1,28 +1,21 @@
 from django.db import models
-from django.core.exceptions import ValidationError
 
 class Category(models.Model):
     """
     Category model: represents a product Category
     """    
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=100)
 
-    def clean(self):
+    class Meta:
         """
-        Check Validity before saving.
-        Ensures no duplicate Category exists with the same name.
-        Raises a ValidationError if a duplicate is found.
+        Check validity - uniqueness and lowercase, before saving
         """
-        normalized_name = self.name.lower().strip()
-        if Category.objects.filter(name=normalized_name).exclude(pk=self.pk).exists():
-            raise ValidationError({"name": "Category with this name already exists."})
-
-    def save(self, *args, **kwargs):
-        """
-        Convert the name to lowercase and save the object.
-        """
-        self.name = self.name.lower().strip()
-        super().save(*args, **kwargs)
+        constraints = [
+            models.UniqueConstraint(
+                models.functions.Lower("name"),
+                name="unique_category_name_case_insensitive"
+            )
+        ]
 
     def __str__(self): 
         return self.name
@@ -31,16 +24,18 @@ class Tag(models.Model):
     """
     Tag model: allows products to have mutiple tags
     """
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50)
 
-    def clean(self):
-        normalized_name = self.name.lower().strip()
-        if Tag.objects.filter(name=normalized_name).exclude(pk=self.pk).exists():
-            raise ValidationError({"name": "Category with this name already exists."})
-
-    def save(self, *args, **kwargs):
-        self.name = self.name.lower().strip()
-        super().save(*args, **kwargs)
+    class Meta:
+        """
+        Check validity - uniqueness and lowercase, before saving
+        """
+        constraints = [
+            models.UniqueConstraint(
+                models.functions.Lower("name"),
+                name="unique_tag_name_case_insensitive"
+            )
+        ]
 
     def __str__(self):
         return self.name
@@ -64,6 +59,17 @@ class Product(models.Model):
         Tag,
         related_name="products"
     )
+
+    class Meta:
+        """
+        Check validity - uniqueness and lowercase, before saving
+        """
+        constraints = [
+            models.UniqueConstraint(
+                models.functions.Lower("name"),
+                name="unique_product_name_case_insensitive"
+            )
+        ]
 
     def __str__(self):
         return self.name
