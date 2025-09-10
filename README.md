@@ -9,24 +9,29 @@ This project is a simple product search app built with Django + React.
 - Combine search and filters  
 
 
-## ✨ Tech Stack
+## Screenshots
+
+![Screenshot]()
+
+
+## Tech Stack
 
 - **Django** + DRF for the backend API  
 - **React** + **Tailwind CSS** for the frontend  
 - **PostgreSQL/sqlite3** for the database
 - **Docker**
 
-## 📦 Getting Started
+## Getting Started
 
 ### 1. Clone the repo
 
-```
+```bash
 git clone https://github.com/yerim01/django-assignment
 cd django-assignment
 ```
 
 ### 2. Backend setup
-```
+```bash
 cd Backend
 
 # Create a virtual environment to isolate our package dependencies locally
@@ -51,7 +56,7 @@ python manage.py runserver
 Default is SQLite. If you want to use PostgreSQL, add env variables.
 
 Create a .env.local file and add the following:
-```
+```bash
 DB_ENGINE=django.db.backends.postgresql
 POSTGRES_DB=shop
 POSTGRES_USER=shopuser
@@ -66,17 +71,18 @@ DB_PORT=5432
 
 ### 3. Frontend setup
 
-```
+```bash
 cd frontend
 npm install
 npm run dev
+
 ```
 - React app runs on: `http://localhost:5173/`
 
 ### Docker setup (Optional)
 When using Docker, you do not need PostgreSQL. The container runs with SQLite.
 - Clone the source code and install docker before running commands below
-```
+```bash
 # Run where docker-compose.yml is located
 docker-compose up --build
 
@@ -90,8 +96,6 @@ docker-compose exec backend python manage.py loaddata sample_data.json
 - Access backend API: `http://localhost:8000/`
 - Access Django admin: `http://localhost:8000/admin/`
 - React app runs on: `http://localhost:3000/`
-
-
 ## API Reference
 
 - `/products/` - GET all products, supports query params:
@@ -102,6 +106,27 @@ docker-compose exec backend python manage.py loaddata sample_data.json
 
 - `/categories/` - GET a lit of categories (example: `http://localhost:8000/categories/`)
 - `/tags/` - GET a list of tags (example: `http://localhost:8000/tags/`)
+
+
+## Running Tests
+
+To run tests, run the following command
+
+```bash
+  python manage.py test
+```
+On Docker, run the following command
+```bash
+  docker-compose exec backend python manage.py test
+```
+
+
+## Notes
+
+- Category, Tag and Product are ordered by name
+- Filtering uses AND logic between search, category and tags
+- Tag filtering uses OR logic for multiple tags
+- Frontend fetches data dynamically as the user types search keyword or selects filters
 
 
 ## Acknowledgements
